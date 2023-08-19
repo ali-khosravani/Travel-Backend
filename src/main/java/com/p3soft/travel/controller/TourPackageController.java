@@ -1,8 +1,10 @@
 package com.p3soft.travel.controller;
 
+import com.p3soft.travel.exception.NotFoundResponse;
 import com.p3soft.travel.model.TourPackage;
 import com.p3soft.travel.repository.TourPackageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,7 +14,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/tour-package")
 public class TourPackageController {
-    private TourPackageRepository tourPackageRepository;
+    private final TourPackageRepository tourPackageRepository;
 
     @Autowired
     public TourPackageController(TourPackageRepository tourPackageRepository) {
@@ -35,5 +37,15 @@ public class TourPackageController {
             tourPackageRepository.save(new TourPackage(tourPackage.getCode(),tourPackage.getName()));
         }
     }
+    @RequestMapping(value = "/search",method = RequestMethod.GET)
 
+    public Optional<TourPackage> getTourPackageByName(@Param("name") String name) throws NotFoundResponse {
+        Optional<TourPackage> tourPackage =tourPackageRepository.findByName(name);
+        if (tourPackage.isEmpty()){
+            throw new NotFoundResponse(500,"Error: Not Found By Ali");
+        }
+        else {
+            return tourPackage;
+        }
+    }
 }

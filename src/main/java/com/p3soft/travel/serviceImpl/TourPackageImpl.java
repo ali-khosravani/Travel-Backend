@@ -4,14 +4,12 @@ import com.p3soft.travel.model.TourPackage;
 import com.p3soft.travel.repository.TourPackageRepository;
 import com.p3soft.travel.service.TourPackageService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 import java.util.List;
 import java.util.Optional;
 
-
 public class TourPackageImpl implements TourPackageService {
-    private TourPackageRepository tourPackageRepository;
+    private final TourPackageRepository tourPackageRepository;
 
     @Autowired
 
@@ -33,8 +31,12 @@ public class TourPackageImpl implements TourPackageService {
     }
 
     @Override
-
     public Optional<TourPackage> getTourPackageById(String code) {
         return tourPackageRepository.findById(code);
+    }
+
+    @Override
+    public Optional<TourPackage> getTourPackageByName(String name )  {
+        return tourPackageRepository.findByName(name);
     }
 }

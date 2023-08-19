@@ -1,6 +1,7 @@
 package com.p3soft.travel.service;
 
 
+import com.p3soft.travel.exception.NotFoundResponse;
 import com.p3soft.travel.model.TourPackage;
 import org.springframework.stereotype.Service;
 
@@ -12,4 +13,6 @@ public interface TourPackageService {
     TourPackage createTourPackage(String code,String name);
     List<TourPackage> getAllTourPackages();
     Optional<TourPackage> getTourPackageById(String code);
+    Object getTourPackageByName(String name);
+
 }
